@@ -201,6 +201,10 @@ export default class PackageRequest {
         manifest = await this.findVersionOnRegistry(requestPattern);
       }
       return resolver.resolve(manifest);
+    } else if (this.lockfile.cache[this.pattern]) {
+      return this.findVersionOnRegistry(
+        this.lockfile.cache[this.pattern].name + '@' + this.lockfile.cache[this.pattern].version,
+      );
     } else {
       return this.findVersionOnRegistry(this.pattern);
     }
